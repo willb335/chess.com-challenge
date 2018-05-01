@@ -1,7 +1,9 @@
 <template>
     <ul id="chessboard">
-        <li v-bind:class="[(square === 'odd') ? 'odd square' : 'even square']" v-for="(square, index) of squares" v-bind:key="index">
-        Hi
+        <li v-bind:class="[(square === 'odd') ? `odd square ${generatedClass[index]}` : `even square ${generatedClass[index]}`]" v-for="(square, index) of squares" v-bind:key="index" v-on:click="clickedSquare = index">
+          <div v-if="clickedSquare === index" class="clicked">
+          </div>
+          <div v-else></div>
         </li>
     </ul>
     <!-- <h1>{{ msg }}</h1> -->
@@ -17,18 +19,26 @@ export default {
   },
   data: function() {
     return {
-      squares: []
+      squares: [],
+      indexes: [],
+      clickedSquare: "none"
     };
+  },
+  computed: {
+    generatedClass: function() {
+      return this.indexes.map((n, i) => "square" + "-" + (i + 1));
+    }
   },
   created: function() {
     let row = 1;
+    this.indexes = Array(64).fill(0);
     return Array(64)
       .fill(0)
       .forEach((s, i) => {
         if (i % 8 === 0) row = row + 1;
 
         if (row % 2 === 0) {
-          this.squares.push(i + 1);
+          this.squares.push("even");
         } else {
           this.squares.push("odd");
         }
@@ -70,6 +80,18 @@ li:nth-child(odd).odd {
 }
 
 .square {
+  position: relative;
   list-style-type: none;
+}
+
+.clicked {
+  position: absolute;
+  outline: 3px solid green;
+  width: calc(100% - 6px);
+  height: calc(100% - 6px);
+  left: 3px;
+  top: 3px;
+  mright: 3px;
+  bottom: 3px;
 }
 </style>
