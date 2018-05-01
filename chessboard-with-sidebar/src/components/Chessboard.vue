@@ -1,12 +1,11 @@
 <template>
     <ul id="chessboard">
-        <li v-bind:class="[(square === 'odd') ? `odd square ${generatedClass[index]}` : `even square ${generatedClass[index]}`]" v-for="(square, index) of squares" v-bind:key="index" v-on:click="clickedSquare = index">
+        <li v-bind:class="[(square === 'odd') ? `odd square ${generatedClass[index]}` : `even square ${generatedClass[index]}`]" v-for="(square, index) of squares" v-bind:key="index" v-on:click="handleSquareClick(index)">
           <div v-if="clickedSquare === index" class="clicked">
           </div>
           <div v-else></div>
         </li>
     </ul>
-    <!-- <h1>{{ msg }}</h1> -->
 </template>
 
 
@@ -14,19 +13,24 @@
 <script>
 export default {
   name: "Chessboard",
-  props: {
-    msg: String
-  },
   data: function() {
     return {
       squares: [],
       indexes: [],
-      clickedSquare: "none"
+      clickedSquare: "none",
+      clickedSquares: []
     };
   },
   computed: {
     generatedClass: function() {
       return this.indexes.map((n, i) => "square" + "-" + (i + 1));
+    }
+  },
+  methods: {
+    handleSquareClick: function(index) {
+      this.clickedSquare = index;
+      this.clickedSquares.push(index + 1);
+      this.$emit("handleSquareClick", this.clickedSquares);
     }
   },
   created: function() {
@@ -52,8 +56,10 @@ export default {
   display: flex;
   justify-content: stretch;
   align-items: stretch;
-  width: 40vw;
-  height: 40vw;
+  max-height: 95vh;
+  max-width: 95vh;
+  width: 45vw;
+  height: 45vw;
   flex-wrap: wrap;
   padding: 0px;
   margin: 0px;
@@ -93,5 +99,30 @@ li:nth-child(odd).odd {
   top: 3px;
   mright: 3px;
   bottom: 3px;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 600px) {
+  #chessboard {
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    width: 95vw;
+    height: 95vw;
+    flex-wrap: wrap;
+    padding: 0px;
+    margin: 0px;
+  }
+}
+
+@media only screen and (min-device-width: 480px) and (max-device-width: 900px) and (orientation: landscape) {
+  #chessboard {
+    display: flex;
+    justify-content: stretch;
+    align-items: stretch;
+    width: 95vh;
+    height: 95vh;
+    flex-wrap: wrap;
+    padding: 0px;
+  }
 }
 </style>
