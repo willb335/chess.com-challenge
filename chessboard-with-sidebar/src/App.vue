@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="flex-container">
+    <div class="flex-container" :style="{ backgroundImage: `url('${backgroundImage}')` }">
       <Chessboard msg="Chessboard goes here!" v-on:handleSquareClick="storeClickedSquares($event)"/>
       <Sidebar v-bind:clicked-squares="clickedSquares"/>
     </div>
@@ -10,6 +10,7 @@
 <script>
 import Chessboard from "./components/Chessboard.vue";
 import Sidebar from "./components/Sidebar.vue";
+import backgroundImage from "./assets/wood.jpg";
 export default {
   name: "app",
   components: {
@@ -18,7 +19,8 @@ export default {
   },
   data: function() {
     return {
-      clickedSquares: []
+      clickedSquares: [],
+      backgroundImage
     };
   },
   methods: {
@@ -37,7 +39,6 @@ body {
   overflow: hidden;
   height: 100vh;
   width: 100vw;
-  background-color: purple;
 }
 
 #app {
@@ -50,10 +51,8 @@ body {
 
 .flex-container {
   position: absolute;
-  background-color: purple;
-  float: left;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   height: 100%;
   width: 100%;

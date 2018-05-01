@@ -52,36 +52,23 @@ export default {
 </script>
 
 <style scoped>
-#chessboard {
-  display: flex;
-  justify-content: stretch;
-  align-items: stretch;
-  max-height: 95vh;
-  max-width: 95vh;
-  width: 45vw;
-  height: 45vw;
-  flex-wrap: wrap;
-  padding: 0px;
-  margin: 0px;
-}
-
 li:nth-child(even).even {
-  background: orange;
+  background: #8876b7;
   flex-basis: 12.5%;
 }
 
 li:nth-child(odd).even {
-  background: #a5673f;
+  background: #efefef;
   flex-basis: 12.5%;
 }
 
 li:nth-child(even).odd {
-  background: #a5673f;
+  background: #efefef;
   flex-basis: 12.5%;
 }
 
 li:nth-child(odd).odd {
-  background: orange;
+  background: #8876b7;
   flex-basis: 12.5%;
 }
 
@@ -101,6 +88,20 @@ li:nth-child(odd).odd {
   bottom: 3px;
 }
 
+#chessboard {
+  display: flex;
+  justify-content: stretch;
+  align-items: stretch;
+  max-height: 85vh;
+  max-width: 85vh;
+  width: calc(85vw - 35vw);
+  height: calc(85vw - 35vw);
+  flex-wrap: wrap;
+  padding: 0px;
+  align-self: center;
+  margin-right: 20px;
+}
+
 @media only screen and (min-device-width: 320px) and (max-device-width: 600px) {
   #chessboard {
     display: flex;
@@ -111,18 +112,6 @@ li:nth-child(odd).odd {
     flex-wrap: wrap;
     padding: 0px;
     margin: 0px;
-  }
-}
-
-@media only screen and (min-device-width: 480px) and (max-device-width: 900px) and (orientation: landscape) {
-  #chessboard {
-    display: flex;
-    justify-content: stretch;
-    align-items: stretch;
-    width: 95vh;
-    height: 95vh;
-    flex-wrap: wrap;
-    padding: 0px;
   }
 }
 </style>

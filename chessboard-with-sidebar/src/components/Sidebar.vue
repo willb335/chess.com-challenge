@@ -1,6 +1,6 @@
 <template>
     <div id="sidebar">
-      <div>{{ clickedSquares }}</div>
+      <div class="selected-squares">{{ clickedSquares }}</div>
     </div>
 </template>
 
@@ -18,10 +18,11 @@ export default {
 
 <style scoped>
 #sidebar {
-  height: 95vh;
-  width: 22.5vw;
+  height: calc(100vh - 40px);
+  width: 35vw;
+  max-width: 400px;
+  margin: 20px;
   background-color: #111;
-  margin: 20px 20px 20px 40px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -32,21 +33,14 @@ export default {
     height: 22.5vh;
     width: 95vw;
     background-color: #111;
-    margin: 20px 20px 20px 20px;
+    margin: 20px 5px 5px 5px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
   }
 }
 
-@media only screen and (min-device-width: 480px) and (max-device-width: 900px) and (orientation: landscape) {
-  #sidebar {
-    height: 95vh;
-    width: 22.5vh;
-    background-color: #111;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
+.selected-squares {
+  color: #fff;
 }
 </style>
