@@ -1,17 +1,17 @@
 <template>
     <div id="sidebar">
-      <div class="selected-squares">{{ clickedSquares }}</div>
+      <ul class="selected-squares">
+        <li v-bind:key="clickedSquare" v-for="clickedSquare in clickedSquares">{{ clickedSquare }}</li>
+      </ul>
     </div>
 </template>
 
 <script>
 export default {
   name: "Sidebar",
+
   props: {
     clickedSquares: { type: Array }
-  },
-  data: function() {
-    return {};
   }
 };
 </script>
@@ -22,25 +22,28 @@ export default {
   width: 35vw;
   max-width: 400px;
   margin: 20px;
-  background-color: #111;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  background-color: #fff;
+  text-align: left;
+  overflow: scroll;
+  border-radius: 3px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 600px) {
   #sidebar {
     height: 22.5vh;
     width: 95vw;
-    background-color: #111;
+    background-color: #fff;
     margin: 20px 5px 5px 5px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+    text-align: left;
+    overflow: scroll;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   }
 }
 
 .selected-squares {
-  color: #fff;
+  color: #312e2b;
+  list-style-type: none;
 }
 </style>
