@@ -2,7 +2,6 @@
     <ul id="chessboard">
         <li v-bind:key="index" v-bind:class="handleClasses(square, index)" v-for="(square, index) of squares" v-on:click="handleSquareClick(index)">
           <div v-if="clickedSquare === index" class="clicked"/>
-          <div v-else/>
         </li>
     </ul>
 </template>
@@ -11,14 +10,14 @@
 
 <script>
 import { range } from "lodash";
+
 export default {
   name: "Chessboard",
 
   data: function() {
     return {
       squares: [],
-      squareClasses: [],
-      clickedSquare: "",
+      clickedSquare: -1,
       clickedSquares: [],
       numberOfClicks: 0
     };
@@ -105,18 +104,15 @@ export default {
 
   created: function() {
     let row = 1;
-    this.squareClasses = Array(64).fill(0);
-    return Array(64)
-      .fill(0)
-      .forEach((s, i) => {
-        if (i % 8 === 0) row = row + 1;
+    return [...Array(64)].forEach((s, i) => {
+      if (i % 8 === 0) row = row + 1;
 
-        if (row % 2 === 0) {
-          this.squares.push("even");
-        } else {
-          this.squares.push("odd");
-        }
-      });
+      if (row % 2 === 0) {
+        this.squares.push("even");
+      } else {
+        this.squares.push("odd");
+      }
+    });
   }
 };
 </script>
@@ -149,7 +145,7 @@ li:nth-child(odd).odd {
 
 .clicked {
   position: absolute;
-  background-color: rgba(247, 247, 157, 0.6);
+  background-color: rgba(247, 247, 115, 0.6);
   width: 100%;
   height: 100%;
 }
