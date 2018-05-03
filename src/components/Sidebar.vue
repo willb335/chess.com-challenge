@@ -64,7 +64,7 @@ li {
   }
 
   li {
-    flex-basis: 20%;
+    flex-basis: 16.66%;
     font-size: 12px;
   }
 }

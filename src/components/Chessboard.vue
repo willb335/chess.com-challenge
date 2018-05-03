@@ -145,7 +145,8 @@ li:nth-child(odd).odd {
 
 .clicked {
   position: absolute;
-  background-color: rgba(247, 247, 115, 0.6);
+  /* background-color: rgba(247, 247, 115, 0.6); */
+  background-color: rgba(255, 239, 153, 0.6);
   width: 100%;
   height: 100%;
 }
