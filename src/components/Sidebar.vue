@@ -1,7 +1,9 @@
 <template>
     <div id="sidebar">
       <ul class="selected-squares">
-        <li v-bind:key="clickedSquare" v-for="clickedSquare in clickedSquares">{{ clickedSquare }}</li>
+        <div class="row">
+          <li v-bind:key="clickedSquare" v-for="clickedSquare of clickedSquares">{{ clickedSquare }}</li>
+        </div>
       </ul>
     </div>
 </template>
@@ -21,29 +23,55 @@ export default {
   height: calc(100vh - 40px);
   width: 35vw;
   max-width: 400px;
-  margin: 20px;
+  margin: 10px;
   background-color: #fff;
-  text-align: left;
   overflow: scroll;
   border-radius: 3px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   font-weight: bold;
 }
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 600px) {
-  #sidebar {
-    height: 22.5vh;
-    width: 95vw;
-    background-color: #fff;
-    margin: 20px 5px 5px 5px;
-    text-align: left;
-    overflow: scroll;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-  }
-}
-
 .selected-squares {
   color: #312e2b;
   list-style-type: none;
+  display: contents;
+}
+
+.row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 10px 10px 10px 10px;
+}
+
+li {
+  flex-basis: calc(20% - 5px);
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 600px) {
+  #sidebar {
+    height: 24vh;
+    width: 95vw;
+    max-width: 95vw;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+
+  .row {
+    width: calc(95vw - 20px);
+  }
+
+  li {
+    flex-basis: 20%;
+    font-size: 12px;
+  }
+}
+
+@media only screen and (min-device-width: 600px) and (max-device-width: 1024px) {
+  li {
+    flex-basis: 30%;
+  }
 }
 </style>
