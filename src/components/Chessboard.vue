@@ -1,7 +1,7 @@
 <template>
     <ul id="chessboard">
-        <li v-bind:key="index" v-bind:class="handleClasses(square, index)" v-for="(square, index) of squares" v-on:click="handleSquareClick(index)">
-          <div v-if="clickedSquare === index" class="clicked"/>
+        <li v-bind:key="index" tabindex="0" v-bind:class="handleSquareClasses(square, index)" v-for="(square, index) of squares" v-on:click="handleSquareClick(index)" v-on:keyup.enter="handleSquareClick(index)" v-on:keydown="handleArrowKeys($event, index)">
+          <div v-if="selectedSquare === index" class="clicked"/>
         </li>
     </ul>
 </template>
@@ -17,22 +17,55 @@ export default {
   data: function() {
     return {
       squares: [],
-      clickedSquare: -1,
-      clickedSquares: [],
+      selectedSquares: [],
+      selectedSquare: -1,
       numberOfClicks: 0
     };
   },
 
   methods: {
+    /**
+     * Makes chessboard keyboard accesible with arrow keys
+     * @param {Event} e - the event object.
+     * @param {number} index - index of chessboard square.
+     * @returns {void}
+     */
+    handleArrowKeys: function(e, index) {
+      //up
+      if (e.keyCode === 38) {
+        document.getElementsByClassName((index - 8).toString())[0].focus();
+      }
+      //down
+      if (e.keyCode === 40) {
+        document.getElementsByClassName((index + 8).toString())[0].focus();
+      }
+      //right
+      if (e.keyCode === 39) {
+        document.getElementsByClassName((index + 1).toString())[0].focus();
+      }
+      //left
+      if (e.keyCode === 37) {
+        document.getElementsByClassName((index - 1).toString())[0].focus();
+      }
+    },
+    /**
+     * Records the selectedSquare as well as adds to the array of selectedSquares.  Also emits this.selectedSquares to App
+     * @param {number} index - index of chessboard square.
+     * @returns {void}
+     */
     handleSquareClick: function(index) {
       this.numberOfClicks++;
-      this.clickedSquare = index;
-      this.clickedSquares.push(
+      this.selectedSquare = index;
+      this.selectedSquares.push(
         `${this.numberOfClicks}. ${this.convertSquareToCordinate(index + 1)}`
       );
-      this.$emit("handleSquareClick", this.clickedSquares);
+      this.$emit("handleSquareClick", this.selectedSquares);
     },
-
+    /**
+     * Sets the number of the square to a coordinate, i.e. 1 is set to a8
+     * @param {number} num - the number of the square, ranges between 1-65(not including 65)
+     * @returns {string} - the coordinate to be output in the Sidebar
+     */
     convertSquareToCordinate: function(num) {
       const coordinates = [
         { range: range(1, 9), row: 8, col: num },
@@ -45,7 +78,9 @@ export default {
         { range: range(57, 65), row: 1, col: num - 56 }
       ];
 
-      const findRow = coordinates.find(({ range }) => range.includes(num));
+      const findCoordinate = coordinates.find(({ range }) =>
+        range.includes(num)
+      );
 
       const convertColumnsToLetters = col => {
         switch (col) {
@@ -70,41 +105,52 @@ export default {
         }
       };
 
-      return `${convertColumnsToLetters(findRow.col)}${findRow.row} `;
+      return `${convertColumnsToLetters(findCoordinate.col)}${
+        findCoordinate.row
+      }`;
     },
 
-    handleClasses: function(square, index) {
+    /**
+     * Handles css classes, notably the corner border-radii
+     * @param {string} square - the initial value of each square. If odd, square is "odd" and if even, square is "even"
+     * @param {number} index - index of this.squares
+     * @returns {string} - the css classes to be used
+     */
+    handleSquareClasses: function(square, index) {
       if (index === 0) {
         return square === "odd"
-          ? `odd square top-left`
-          : `even square top-left`;
+          ? `odd square top-left ${index}`
+          : `even square top-left ${index}`;
       }
 
       if (index === 7) {
         return square === "odd"
-          ? `odd square top-right`
-          : `even square top-right`;
+          ? `odd square top-right ${index}`
+          : `even square top-right ${index}`;
       }
 
       if (index === 56) {
         return square === "odd"
-          ? `odd square bottom-left`
-          : `even square bottom-left`;
+          ? `odd square bottom-left ${index}`
+          : `even square bottom-left ${index}`;
       }
 
       if (index === 63) {
         return square === "odd"
-          ? `odd square bottom-right`
-          : `even square bottom-right`;
+          ? `odd square bottom-right ${index}`
+          : `even square bottom-right ${index}`;
       }
 
-      return square === "odd" ? `odd square` : `even square`;
+      return square === "odd" ? `odd square ${index}` : `even square ${index}`;
     }
   },
-
+  /**
+   * Creates an array of 64 items that are used to populate the list items
+   * @returns {Array} - pushes to this.squares
+   */
   created: function() {
     let row = 1;
-    return [...Array(64)].forEach((s, i) => {
+    [...Array(64)].forEach((_, i) => {
       if (i % 8 === 0) row = row + 1;
 
       if (row % 2 === 0) {
@@ -143,9 +189,13 @@ li:nth-child(odd).odd {
   list-style-type: none;
 }
 
+.square:focus {
+  z-index: 5;
+  outline: 3px solid #2c3e50;
+}
+
 .clicked {
   position: absolute;
-  /* background-color: rgba(247, 247, 115, 0.6); */
   background-color: rgba(255, 239, 153, 0.6);
   width: 100%;
   height: 100%;
@@ -176,22 +226,18 @@ li:nth-child(odd).odd {
   width: calc(85vw - 35vw);
   height: calc(85vw - 35vw);
   flex-wrap: wrap;
-  padding: 0px;
   align-self: center;
   margin-right: 20px;
+  padding: 0;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 600px) {
   #chessboard {
-    display: flex;
-    justify-content: stretch;
-    align-items: stretch;
     width: 95vw;
     height: 95vw;
-    flex-wrap: wrap;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
   }
 }
 </style>

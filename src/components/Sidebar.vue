@@ -2,7 +2,7 @@
     <div id="sidebar">
       <ul class="selected-squares">
         <div class="row">
-          <li v-bind:key="clickedSquare" v-for="clickedSquare of clickedSquares">{{ clickedSquare }}</li>
+          <li v-bind:key="selectedSquare" v-for="selectedSquare of selectedSquares">{{ selectedSquare }}</li>
         </div>
       </ul>
     </div>
@@ -13,7 +13,7 @@ export default {
   name: "Sidebar",
 
   props: {
-    clickedSquares: { type: Array }
+    selectedSquares: { type: Array }
   }
 };
 </script>
@@ -43,7 +43,7 @@ export default {
   align-items: flex-start;
   flex-wrap: wrap;
   width: 100%;
-  padding: 10px 10px 10px 10px;
+  padding: 10px 5px 10px 5px;
 }
 
 li {

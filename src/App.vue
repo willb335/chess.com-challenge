@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <div class="flex-container">
-      <Chessboard v-on:handleSquareClick="storeClickedSquares($event)"/>
-      <Sidebar v-bind:clicked-squares="clickedSquares"/>
+      <Chessboard v-on:handleSquareClick="storeSelectedSquares($event)"/>
+      <Sidebar v-bind:selected-squares="selectedSquares"/>
     </div>
   </div>
 </template>
@@ -20,13 +20,18 @@ export default {
 
   data: function() {
     return {
-      clickedSquares: []
+      selectedSquares: []
     };
   },
 
   methods: {
-    storeClickedSquares: function(clickedSquares) {
-      this.clickedSquares = clickedSquares;
+    /**
+     * Sets this.selectedSquares, which is passed to Sidebar
+     * @param {Array<string>} selectedSquares - An array of coordinates.
+     * @returns {void}
+     */
+    storeSelectedSquares: function(selectedSquares) {
+      this.selectedSquares = selectedSquares;
     }
   }
 };
