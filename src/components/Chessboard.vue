@@ -25,9 +25,9 @@ export default {
 
   methods: {
     /**
-     * Makes chessboard keyboard accesible with arrow keys
-     * @param {Event} e - the event object.
-     * @param {number} index - index of chessboard square.
+     * Makes chessboard keyboard accesible via arrow keys
+     * @param {Event} e - the event object
+     * @param {number} index - index of square
      * @returns {void}
      */
     handleArrowKeys: function(e, index) {
@@ -49,8 +49,8 @@ export default {
       }
     },
     /**
-     * Records the selectedSquare as well as adds to the array of selectedSquares.  Also emits this.selectedSquares to App
-     * @param {number} index - index of chessboard square.
+     * Records the selectedSquare and adds it to the array of selectedSquares.  Also emits this.selectedSquares to App
+     * @param {number} index - index of square
      * @returns {void}
      */
     handleSquareClick: function(index) {
@@ -62,8 +62,8 @@ export default {
       this.$emit("handleSquareClick", this.selectedSquares);
     },
     /**
-     * Sets the number of the square to a coordinate, i.e. 1 is set to a8
-     * @param {number} num - the number of the square, ranges between 1-65(not including 65)
+     * Sets square to a coordinate, i.e. 1 is set to a8
+     * @param {number} num - the number of the square, ranges from 1-65(not including 65)
      * @returns {string} - the coordinate to be output in the Sidebar
      */
     convertSquareToCordinate: function(num) {
@@ -109,12 +109,11 @@ export default {
         findCoordinate.row
       }`;
     },
-
     /**
-     * Handles css classes, notably the corner border-radii
+     * Handles css classes, notably the corner squares' border-radii
      * @param {string} square - the initial value of each square. If odd, square is "odd" and if even, square is "even"
      * @param {number} index - index of this.squares
-     * @returns {string} - the css classes to be used
+     * @returns {string} - the css classes
      */
     handleSquareClasses: function(square, index) {
       if (index === 0) {
@@ -145,8 +144,8 @@ export default {
     }
   },
   /**
-   * Creates an array of 64 items that are used to populate the list items
-   * @returns {Array} - pushes to this.squares
+   * Creates an array of 64 items that populate the <li/>
+   * @returns {void}
    */
   created: function() {
     let row = 1;
@@ -191,7 +190,8 @@ li:nth-child(odd).odd {
 
 .square:focus {
   z-index: 5;
-  outline: 3px solid #2c3e50;
+  outline: 1px solid #2c3e50;
+  box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .clicked {
@@ -236,8 +236,11 @@ li:nth-child(odd).odd {
   #chessboard {
     width: 95vw;
     height: 95vw;
-    padding: 0;
-    margin: 0;
+    margin: 10px 0 0 0;
+  }
+
+  .square:focus {
+    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.5);
   }
 }
 </style>

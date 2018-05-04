@@ -27,7 +27,7 @@ export default {
   methods: {
     /**
      * Sets this.selectedSquares, which is passed to Sidebar
-     * @param {Array<string>} selectedSquares - An array of coordinates.
+     * @param {Array<String>} selectedSquares - An array of coordinates.
      * @returns {void}
      */
     storeSelectedSquares: function(selectedSquares) {
@@ -67,13 +67,8 @@ body {
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 600px) {
   .flex-container {
-    position: absolute;
-    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
   }
 }
 </style>
