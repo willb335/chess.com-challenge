@@ -190,8 +190,8 @@ li:nth-child(odd).odd {
 
 .square:focus {
   z-index: 5;
-  outline: 1px solid #2c3e50;
-  box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.5);
+  outline: 2px solid rgba(255, 239, 153, 1);
+  outline-offset: -2px;
 }
 
 .clicked {
@@ -237,10 +237,6 @@ li:nth-child(odd).odd {
     width: 95vw;
     height: 95vw;
     margin: 10px 0 0 0;
-  }
-
-  .square:focus {
-    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.5);
   }
 }
 </style>
